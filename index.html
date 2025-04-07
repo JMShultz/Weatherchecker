@@ -9,15 +9,21 @@
  
 </head>
 <body>
-
-  <h1>5-Day Weather Forecast</h1>
-  <label for="citySelect">Enter City:</label>
-  <input type="text" id="citySelect" placeholder="Enter city name">
-  <input type="submit" id="weatherselect"></input>
-  <div id="weather"></div>
-
-  
-  <script src="assets/script.js"></script>
+<div class="weather-app">
+  <h1>Weather Checker</h1>
+  <input type="text" id="city-input" placeholder="Search for City">
+  <button id="btn-search">Search</button>
+  <div id="displayWeather" class="hidden">
+        <h2 id="city-name"></h2>
+        <p id="weatherDiscription"></p>
+        <p id="Temp"></p>
+        <p id="Humidity"></p>
+        <p id="windSpeed"></p>
+        <img id="weatherIcon" src="" alt="weather weatherIcon">
+  </div>
+  <p id="error-message" class="hidden"></p>
+</div>
+<script src="./assets/script.js"></script>
 </body>
 
 </html>

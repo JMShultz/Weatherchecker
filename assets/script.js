@@ -1,55 +1,45 @@
 
-const apiKey = '48205a00080b9db7adfd2a939418ad39'; 
-const apiUrl = 'https://api.openweathermap.org/data/2.5/forecast';
-var weatherBtn = document.querySelector("#weatherselect");
-weatherBtn.addEventListener("click", getForecast);
+
+const apiKey = '48205a00080b9db7adfd2a939418ad39';
+const baseURL='https://api.openweathermap.org/data/2.5/weather';
+
+const cityInput= document.getElementById('City-input');
+const searchBtn= document.getElementById('City-input');
+const weatherDisplay= document.getElementById('City-input');
+const errorMessage= document.getElementById('City-input');
 
 
-function getWeather(city) {
-  return fetch(`${apiUrl}?q=${city}&appid=${apiKey}`)
-    .then(response => response.json());
+
+const CityName= document.getElementById('city-name');
+const weatherDiscription= document.getElementById('weatherDiscription');
+const Temp= document.getElementById('Temp');
+const Humidity= document.getElementById('Humidity');
+const windSpeed= document.getElementById('windSpeed');
+const weatherIcon= document.getElementById('weatherIcon');
+
+async function fetchweather(City){
+try {
+    const responce= await fetch(`${baseURL}?q=${City}&appid=${apiKey}&units=metric`)
+    const data = await responce.json()
+    displayWeather(data)
+    errorMessage.classList.add("hidden")
+    weatherDisplay.classList.remove("hidden")
+  
+} catch (error) {
+    showError(error.message)
 }
+};
 
-function WeatherForecast(weatherData) {
-  const container = document.getElementById('weather');
-  container.innerHTML = ''; 
+fetchweather('Ohio')
+    function showError(message){
 
-  weatherData.list.forEach(item => {
-    const date = new Date(item.dt * 1000); 
-    const day = date.toLocaleDateString('en-US', { weekday: 'long' });
-    const time = date.toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' });
+    };
 
-    const temps = item.main.temp;
-    const Weatherdescription = item.weather[0].description;
+    function displayWeather(data){
+        CityName.textContent=`Weather in ${data.name},${data.sys.country}`
+        weatherDiscription.textContent=`condition:${data.weather[0].description}`
+        Temp.textContent=`Temperature:${data.main.temp} C`
+        Humidity.textContent=`Humidity:${data.main.humidity}`
+        windSpeed.textContent=`WindSpeed:${data.wind.speed}`
 
-    const forecastWeather = document.createElement('div');
-    forecastWeather.classList.add('forecast-item');
-    forecastWeather.innerHTML = `
-      <p><strong>${day}</strong></p>
-      <p>${time}</p>
-      <p>${temps} &deg;F</p>
-      <p>${Weatherdescription}</p>
-    `;
-
-    container.appendChild(forecastWeather);
-  });
-}
-
-async function getForecast() {
-  const citySelect = document.getElementById('citySelect');
-  const city = citySelect.value;
-
-  if (!city) {
-    alert('Please enter a city name.');
-    return;
-  }
-
-  try {
-    const weatherData = await getWeather(city);
-    WeatherForecast(weatherData);
-  } catch (error) {
-    console.error('Error fetching data:', error);
-  }
-}
-
-getWeather();
+    };
