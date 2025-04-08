@@ -1,10 +1,7 @@
 # Weatherchecker
 
-This will allow user to check current weather.
+This will allow user to check current weather in the city they live in.
 
-
-
-   <img src="./assets/images/weatherpic.png">
 
  
  
